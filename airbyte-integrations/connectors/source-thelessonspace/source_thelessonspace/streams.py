@@ -131,6 +131,8 @@ class Recording(HttpStream):
         result = response.json()
         result['uuid'] = self.uuid
         result['playback_url'] = self.playback_link
+        result['start_time'] = self.start_time
+        result['end_time'] = self.end_time
         return [result]
 
 

@@ -1,0 +1,22 @@
+data:
+  allowedHosts:
+    hosts:
+      - TODO # Please change to the hostname of the source.
+  registries:
+    oss:
+      enabled: false
+  connectorSubtype: api
+  connectorType: source
+  definitionId: 2eafbe6f-99f9-434e-a8ab-e2d76ab646ce
+  dockerImageTag: 0.1.0
+  dockerRepository: airbyte/source-thelessonspace
+  githubIssueLabel: source-thelessonspace
+  icon: thelessonspace.svg
+  license: MIT
+  name: Thelessonspace
+  releaseDate: 2023-07-07
+  releaseStage: alpha
+  documentationUrl: https://docs.airbyte.com/integrations/sources/thelessonspace
+  tags:
+    - language:python
+metadataSpecVersion: "1.0"

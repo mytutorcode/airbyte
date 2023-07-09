@@ -1,0 +1,26 @@
+documentationUrl: https://docsurl.com
+connectionSpecification:
+  $schema: http://json-schema.org/draft-07/schema#
+  title: Thelessonspace Spec
+  type: object
+  required:
+    - api_key
+    - organisation_id
+    - start_at
+  additionalProperties: true
+  properties:
+    api_key:
+      type: string
+      title: API Key
+      description: API key for accessing thelessonspace.com
+      airbyte_secret: true
+    organisation_id:
+      type: integer
+      title: Organisation ID
+      description: The Organisation ID for thelessonspace.com account
+    start_at:
+      type: string
+      title: Start From
+      description: Date to start the sync from in YYYY-MM-DD format
+      examples:
+        - 2023-07-03

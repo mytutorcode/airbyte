@@ -1,0 +1,346 @@
+{
+  "required": [
+    "space",
+    "uuid",
+    "profiles",
+    "guests"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "title": "ID",
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "maxLength": 512,
+      "x-nullable": true
+    },
+    "space": {
+      "required": [
+        "slug",
+        "organisation",
+        "created_at"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "description": "UUID of the Space",
+          "type": "string",
+          "readOnly": true
+        },
+        "alias": {
+          "title": "Alias",
+          "type": "string",
+          "format": "slug",
+          "pattern": "^[-a-zA-Z0-9_]+$",
+          "maxLength": 512,
+          "minLength": 1
+        },
+        "slug": {
+          "title": "Slug",
+          "type": "string",
+          "format": "slug",
+          "pattern": "^[-a-zA-Z0-9_]+$",
+          "maxLength": 256,
+          "minLength": 1
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 128,
+          "x-nullable": true
+        },
+        "organisation": {
+          "title": "Organisation",
+          "type": "integer"
+        },
+        "is_locked": {
+          "title": "Is locked",
+          "type": "string",
+          "readOnly": true
+        },
+        "tags": {
+          "title": "Tags",
+          "type": "string",
+          "readOnly": true
+        },
+        "url": {
+          "title": "Url",
+          "description": "The fully qualified URL of the space. If the current user is authenticated the URL will include the encoded JWT 'user' parameter. If this space is locked and the current user is a student then this will be `None`",
+          "type": "string",
+          "readOnly": true
+        },
+        "tutorial_url": {
+          "title": "Tutorial url",
+          "type": "string",
+          "format": "uri",
+          "maxLength": 200,
+          "x-nullable": true
+        },
+        "template": {
+          "title": "Template",
+          "description": "The template for the space, if any. This is a zip file that contains a configuration associated with this space.",
+          "type": "string",
+          "readOnly": true,
+          "format": "uri"
+        },
+        "cover_image": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "title": "ID",
+              "type": "integer",
+              "readOnly": true
+            },
+            "uploaded_at": {
+              "title": "Uploaded at",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "image": {
+              "title": "Image",
+              "type": "string",
+              "readOnly": true,
+              "format": "uri"
+            },
+            "admin_verified": {
+              "title": "Admin verified",
+              "type": "string",
+              "enum": [
+                "not-verified",
+                "verified"
+              ]
+            }
+          }
+        },
+        "created_at": {
+          "title": "Created at",
+          "type": "string",
+          "format": "date-time"
+        },
+        "locks": {
+          "type": "array",
+          "items": {
+            "required": [
+              "organisation",
+              "allowed_groups"
+            ],
+            "type": "object",
+            "properties": {
+              "id": {
+                "title": "ID",
+                "type": "integer",
+                "readOnly": true
+              },
+              "organisation": {
+                "title": "Organisation",
+                "description": "The organisation that this lock belongs to. This is not necessarily always going to be the same organisation as the one that the space is locked to (i.e. in the case of Courses).",
+                "type": "integer"
+              },
+              "allowed_users": {
+                "title": "Allowed users",
+                "type": "string",
+                "readOnly": true
+              },
+              "allowed_groups": {
+                "type": "array",
+                "items": {
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "ID",
+                      "type": "integer",
+                      "readOnly": true
+                    },
+                    "name": {
+                      "title": "Name",
+                      "type": "string",
+                      "maxLength": 128,
+                      "minLength": 1
+                    },
+                    "active": {
+                      "title": "Active",
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "lock_before": {
+                "title": "Lock before",
+                "description": "The (optional) earliest time that the respective space can be opened.",
+                "type": "string",
+                "format": "date-time",
+                "x-nullable": true
+              },
+              "lock_after": {
+                "title": "Lock after",
+                "description": "The (optional) latest time that the respective space can be opened.",
+                "type": "string",
+                "format": "date-time",
+                "x-nullable": true
+              }
+            }
+          },
+          "readOnly": true
+        },
+        "recordings_on_old_server": {
+          "title": "Recordings on old server",
+          "type": "string",
+          "maxLength": 512
+        },
+        "region": {
+          "title": "Region",
+          "type": "string",
+          "readOnly": true
+        },
+        "record_av": {
+          "title": "Record av",
+          "type": "boolean",
+          "x-nullable": true
+        }
+      }
+    },
+    "uuid": {
+      "title": "Uuid",
+      "type": "string",
+      "format": "uuid",
+      "x-nullable": true
+    },
+    "playback_url": {
+      "title": "Playback url",
+      "type": "string",
+      "readOnly": true
+    },
+    "start_time": {
+      "title": "Start time",
+      "type": "string",
+      "format": "date-time"
+    },
+    "end_time": {
+      "title": "End time",
+      "type": "string",
+      "format": "date-time",
+      "x-nullable": true
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "required": [
+          "user",
+          "groups"
+        ],
+        "type": "object",
+        "properties": {
+          "user": {
+            "title": "User",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "maxLength": 256,
+            "x-nullable": true
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "uniqueItems": true
+          },
+          "profile_picture": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "title": "ID",
+                "type": "integer",
+                "readOnly": true
+              },
+              "uploaded_at": {
+                "title": "Uploaded at",
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "admin_verified": {
+                "title": "Admin verified",
+                "type": "string",
+                "enum": [
+                  "not-verified",
+                  "verified"
+                ]
+              },
+              "image": {
+                "title": "Image",
+                "type": "string",
+                "readOnly": true,
+                "format": "uri"
+              }
+            }
+          },
+          "email": {
+            "title": "Email",
+            "type": "string",
+            "readOnly": true
+          },
+          "role": {
+            "title": "Role",
+            "type": "string",
+            "enum": [
+              "teacher",
+              "student",
+              "admin"
+            ],
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "guests": {
+      "type": "array",
+      "items": {
+        "required": [
+          "uuid",
+          "session"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "ID",
+            "type": "integer",
+            "readOnly": true
+          },
+          "uuid": {
+            "title": "Uuid",
+            "type": "string",
+            "format": "uuid"
+          },
+          "session": {
+            "title": "Session",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "billable_seconds": {
+      "title": "Billable seconds",
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": -2147483648
+    },
+    "tags": {
+      "title": "Tags",
+      "type": "string",
+      "readOnly": true
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}
